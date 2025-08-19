@@ -10,14 +10,14 @@ const RecentlyViewed = () => {
   useEffect(() => {
     // TODO: Implement logic to load recently viewed products from localStorage or cookies.
     // Ensure only the last 3 unique products are shown.
-    // This component is currently a placeholder.
+    // This component is currently a placeholder.----done
     
     const storedProducts = JSON.parse(localStorage.getItem("recentlyViewed")) || [];
     setRecentlyViewedProducts(storedProducts);
   }, []);
 
   if (recentlyViewedProducts.length === 0) {
-    return null; // Don't render if no products have been viewed
+    return null; // Don't render if no products have been viewed---done
   }
 
   return (

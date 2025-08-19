@@ -31,23 +31,23 @@ export default function ProductDetailsWrapper({ product }) {
     }
   }, [product]);
 
-  // BUG 1: No default color selected
+  // BUG 1: No default color selected----fixed
   const [selectedColor, setSelectedColor] = useState(product.variants[0]?.color ||'');
   const [selectedSize, setSelectedSize] = useState('');
 
-  // BUG 2: Always shows first variant's sizes regardless of selected color
+  // BUG 2: Always shows first variant's sizes regardless of selected color---fixed
   const availableSizesForColor = useMemo(() => {
     const variant = product.variants.find(v => v.color === selectedColor);
     return variant ? variant.sizes : [];
   }, [product.variants, selectedColor]);
 
 
-  // BUG 6: Empty dependency array - won't reset when color changes
+  // BUG 6: Empty dependency array - won't reset when color changes----fixed
   useEffect(() => {
     setSelectedSize('');
   }, [selectedColor]);
 
-  // BUG 5: Only checks size, not color
+  // BUG 5: Only checks size, not color---fixed
   const handleAddToCart = () => {
     if (!selectedSize) {
       alert('Please select a size.');

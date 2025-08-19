@@ -45,7 +45,7 @@ const Header = () => {
             </a>
           </li>
           <li className="relative">
-          {/* 👇 Link to Cart Page */}
+          {/*  Link to Cart Page */}
           <Link href="/cart">
             <svg
               xmlns="http://www.w3.org/2000/svg"

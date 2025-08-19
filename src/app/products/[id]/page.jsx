@@ -1,15 +1,26 @@
-export const dynamic = 'force-dynamic'; 
+"use client";
 
-import { fetchProductById } from '@/data/products';
-import { notFound } from 'next/navigation';
-import ProductDetailsWrapper from './ProductDetailsWrapper';
+import React, { use } from "react";
+import useSWR from "swr";
+import ProductDetailsWrapper from "./ProductDetailsWrapper";
 
-export default async function ProductPage({ params }) {
-  const id =   params.id;
-  const product = await fetchProductById(id);
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
-  if (!product) {
-    notFound();
+export default function ProductPage({ params }) {
+  const { id } =use(params);
+
+  
+  const { data: product, error, isLoading } = useSWR(`/api/products/${id}`, fetcher, {
+    revalidateOnFocus: false, 
+    dedupingInterval: 5 * 60 * 1000,
+  });
+
+  if (isLoading) {
+    return <div className="p-8">Loading product...</div>;
+  }
+
+  if (error || !product) {
+    return <div className="p-8 text-red-500">Failed to load product</div>;
   }
 
   return (
@@ -18,3 +29,4 @@ export default async function ProductPage({ params }) {
     </div>
   );
 }
+
